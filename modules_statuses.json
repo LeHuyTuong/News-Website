@@ -1,0 +1,7 @@
+{
+    "Core": true,
+    "Acl": true,
+    "Category": true,
+    "News": true,
+    "Sitemap": true
+}
