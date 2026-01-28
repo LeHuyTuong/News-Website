@@ -19,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \Illuminate\Support\Facades\Schema::defaultStringLength(191);
+
         // Share categories with all views for the menu
         // In a real app, use a View Composer to limit this to specific views or cache it.
         // For simplicity/demo:
