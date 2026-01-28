@@ -14,6 +14,6 @@ use Modules\Category\App\Http\Controllers\CategoryController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('category', CategoryController::class)->names('category');
+Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+    Route::resource('categories', CategoryController::class)->names('categories');
 });

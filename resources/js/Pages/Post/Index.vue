@@ -1,19 +1,25 @@
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 
 defineProps({
     posts: Object
 });
+
+const deletePost = (post) => {
+    if (confirm(`Are you sure you want to delete "${post.title}"?`)) {
+        router.delete(route('posts.destroy', post.id));
+    }
+};
 </script>
 
 <template>
     <AdminLayout>
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-semibold text-gray-800">Posts Management</h1>
-            <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            <Link :href="route('posts.create')" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                 + New Post
-            </button>
+            </Link>
         </div>
 
         <div class="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -60,8 +66,8 @@ defineProps({
                                 {{ new Date(post.published_at).toLocaleDateString() }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button class="text-indigo-600 hover:text-indigo-900 mr-4">Edit</button>
-                                <button class="text-red-600 hover:text-red-900">Delete</button>
+                                <Link :href="route('posts.edit', post.id)" class="text-indigo-600 hover:text-indigo-900 mr-4">Edit</Link>
+                                <button @click="deletePost(post)" class="text-red-600 hover:text-red-900">Delete</button>
                             </td>
                         </tr>
                     </tbody>

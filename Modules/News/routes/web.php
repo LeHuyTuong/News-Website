@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\News\App\Http\Controllers\NewsController;
+use Modules\News\App\Http\Controllers\HomeController;
+use Modules\News\App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,14 @@ use Modules\News\App\Http\Controllers\NewsController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('news', NewsController::class)->names('news');
+// Public Routes
+Route::middleware('web')->group(function() {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/category/{slug}', [HomeController::class, 'category'])->name('category.show');
+    Route::get('/news/{slug}', [HomeController::class, 'show'])->name('news.show');
+});
+
+// Admin Routes (Auth Protected)
+Route::middleware(['auth', 'web'])->prefix('admin')->group(function () {
+    Route::resource('posts', PostController::class)->names('posts');
 });

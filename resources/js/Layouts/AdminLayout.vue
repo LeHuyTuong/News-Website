@@ -14,7 +14,7 @@ import { Link } from '@inertiajs/vue3';
                     Dashboard
                 </Link>
                 <div class="mt-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Content</div>
-                <Link href="/admin/categories" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-50 text-gray-700 hover:text-blue-600">
+                <Link :href="route('categories.index')" :active="route().current('categories.*')" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-50 text-gray-700 hover:text-blue-600">
                     Categories
                 </Link>
                 <Link href="/admin/posts" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-50 text-gray-700 hover:text-blue-600">
@@ -39,7 +39,19 @@ import { Link } from '@inertiajs/vue3';
                         </svg>
                     </button>
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center space-x-4">
+                    <Link :href="route('posts.create')" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                        New Post
+                    </Link>
+                    
+                    <Link :href="route('categories.create')" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 active:bg-green-900 focus:outline-none focus:border-green-900 focus:ring ring-green-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                        New Category
+                    </Link>
+
+                    <div class="h-6 w-px bg-gray-300 mx-2"></div>
+
                    <span class="text-gray-700 text-sm font-medium mr-4">Admin User</span>
                     <button class="bg-gray-100 p-2 rounded-full text-gray-500 hover:text-blue-600 transition">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

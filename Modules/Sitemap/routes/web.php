@@ -14,6 +14,4 @@ use Modules\Sitemap\App\Http\Controllers\SitemapController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('sitemap', SitemapController::class)->names('sitemap');
-});
+Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');

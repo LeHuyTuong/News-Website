@@ -1,10 +1,20 @@
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 
 const props = defineProps({
     categories: Array
 });
+
+const editCategory = (category) => {
+    router.get(route('categories.edit', category.id));
+};
+
+const deleteCategory = (category) => {
+    if (confirm(`Are you sure you want to delete "${category.name}"?`)) {
+        router.delete(route('categories.destroy', category.id));
+    }
+};
 
 // Recursive Component for Tree Items
 const TreeItem = {
@@ -12,6 +22,7 @@ const TreeItem = {
     props: {
         node: Object
     },
+    emits: ['edit', 'delete'],
     template: `
         <li class="py-2">
             <div class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
@@ -31,7 +42,13 @@ const TreeItem = {
             </div>
             
             <ul v-if="node.children && node.children.length > 0" class="pl-6 mt-2 border-l-2 border-gray-200">
-                <tree-item v-for="child in node.children" :key="child.id" :node="child"></tree-item>
+                <tree-item 
+                    v-for="child in node.children" 
+                    :key="child.id" 
+                    :node="child"
+                    @edit="$emit('edit', $event)"
+                    @delete="$emit('delete', $event)"
+                ></tree-item>
             </ul>
         </li>
     `,
@@ -47,15 +64,22 @@ TreeItem.components.TreeItem = TreeItem;
     <AdminLayout>
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-semibold text-gray-800">Category Management</h1>
-            <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            <Link :href="route('categories.create')" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                 + New Category
-            </button>
+            </Link>
         </div>
 
         <div class="bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="p-6">
                 <ul class="space-y-4">
-                     <component :is="TreeItem" v-for="category in categories" :key="category.id" :node="category" />
+                     <component 
+                        :is="TreeItem" 
+                        v-for="category in categories" 
+                        :key="category.id" 
+                        :node="category"
+                        @edit="editCategory"
+                        @delete="deleteCategory" 
+                     />
                 </ul>
                 
                 <div v-if="categories.length === 0" class="text-center py-8 text-gray-500">

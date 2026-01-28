@@ -90,6 +90,9 @@ class NewsServiceProvider extends ServiceProvider
 
         $componentNamespace = str_replace('/', '\\', config('modules.namespace').'\\'.$this->moduleName.'\\'.config('modules.paths.generator.component-class.path'));
         Blade::componentNamespace($componentNamespace, $this->moduleNameLower);
+
+        // Register View Composer for Navigation Menu
+        \Illuminate\Support\Facades\View::composer('news::layouts.master', \Modules\News\App\Http\ViewComposers\MenuComposer::class);
     }
 
     /**

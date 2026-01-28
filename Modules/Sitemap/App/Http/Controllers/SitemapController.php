@@ -3,9 +3,8 @@
 namespace Modules\Sitemap\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Modules\News\App\Models\Post;
+use Modules\Category\App\Models\Category;
 
 class SitemapController extends Controller
 {
@@ -14,7 +13,16 @@ class SitemapController extends Controller
      */
     public function index()
     {
-        return view('sitemap::index');
+        $posts = Post::where('status', 'published')
+            ->latest('published_at')
+            ->get();
+            
+        $categories = Category::where('is_active', true)->get();
+
+        return response()->view('sitemap::index', [
+            'posts' => $posts,
+            'categories' => $categories,
+        ])->header('Content-Type', 'text/xml');
     }
 
     /**
