@@ -26,7 +26,12 @@ use Inertia\Inertia;
 // });
 
 Route::get('/admin/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard', [
+        'totalPosts' => \Modules\News\App\Models\Post::count(),
+        'publishedPosts' => \Modules\News\App\Models\Post::where('status', 'published')->count(),
+        'totalCategories' => \Modules\Category\App\Models\Category::count(),
+        'categories' => \Modules\Category\App\Models\Category::withCount('posts')->get(),
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

@@ -20,7 +20,7 @@ class Category extends Model
 
     public function posts()
     {
-        return $this->hasMany('Modules\Post\App\Models\Post');
+        return $this->hasMany('Modules\News\App\Models\Post');
     }
     public function getActivitylogOptions(): LogOptions
     {

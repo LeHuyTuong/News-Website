@@ -8,7 +8,11 @@ defineProps({
 
 const deletePost = (post) => {
     if (confirm(`Are you sure you want to delete "${post.title}"?`)) {
-        router.delete(route('posts.destroy', post.id));
+        console.log('Deleting post ID:', post.id);
+        router.delete(route('posts.destroy', post.id), {
+            onSuccess: () => console.log('Delete successful'),
+            onError: (errors) => console.error('Delete failed', errors)
+        });
     }
 };
 </script>

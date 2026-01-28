@@ -82,12 +82,12 @@ class CategoryController extends BaseController
 
         // Tư duy ngân hàng: Kiểm tra xem có danh mục con không trước khi xóa
         if ($category->children()->count() > 0) {
-           return redirect()->back()->withErrors(['error' => 'Không thể xóa danh mục có chứa danh mục con!']);
+           return redirect()->back()->with('error', 'Không thể xóa danh mục có chứa danh mục con!');
         }
 
         // Kiểm tra xem có bài viết không (Restrict logic)
         if ($category->posts()->count() > 0) {
-             return redirect()->back()->withErrors(['error' => 'Không thể xóa danh mục đang có bài viết!']);
+             return redirect()->back()->with('error', 'Không thể xóa danh mục đang có bài viết!');
         }
 
         $category->delete();

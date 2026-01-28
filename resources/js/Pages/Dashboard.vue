@@ -1,6 +1,13 @@
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+
+defineProps({
+    totalPosts: Number,
+    publishedPosts: Number,
+    totalCategories: Number,
+    categories: Array
+});
 </script>
 
 <template>
@@ -50,24 +57,50 @@ import { Head, Link } from '@inertiajs/vue3';
                     </div>
                 </div>
 
-                <!-- Stats Overview (Optional Placeholder) -->
-                <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-100">
-                    <div class="p-6 text-gray-900">
-                        <h3 class="text-lg font-bold mb-4">Quick Stats</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <span class="block text-gray-500 text-xs uppercase font-bold">Total Posts</span>
-                                <span class="block text-3xl font-black text-gray-800 mt-1">--</span>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <span class="block text-gray-500 text-xs uppercase font-bold">Published</span>
-                                <span class="block text-3xl font-black text-blue-600 mt-1">--</span>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <span class="block text-gray-500 text-xs uppercase font-bold">Total Categories</span>
-                                <span class="block text-3xl font-black text-green-600 mt-1">--</span>
+                <!-- Stats Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Quick Stats -->
+                    <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-100">
+                        <div class="p-6 text-gray-900">
+                            <h3 class="text-lg font-bold mb-4">Quick Stats</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <span class="block text-gray-500 text-xs uppercase font-bold">Total Posts</span>
+                                    <span class="block text-3xl font-black text-gray-800 mt-1">{{ totalPosts }}</span>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <span class="block text-gray-500 text-xs uppercase font-bold">Published</span>
+                                    <span class="block text-3xl font-black text-blue-600 mt-1">{{ publishedPosts }}</span>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <span class="block text-gray-500 text-xs uppercase font-bold">Total Categories</span>
+                                    <span class="block text-3xl font-black text-green-600 mt-1">{{ totalCategories }}</span>
+                                </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Categories List -->
+                    <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-100">
+                         <div class="p-6 text-gray-900">
+                            <h3 class="text-lg font-bold mb-4">Categories Overview</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Posts</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr v-for="category in categories" :key="category.id">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ category.name }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ category.posts_count }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                         </div>
                     </div>
                 </div>
 

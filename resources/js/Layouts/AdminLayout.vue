@@ -32,6 +32,7 @@ import { Link } from '@inertiajs/vue3';
         <div class="flex-1 flex flex-col overflow-hidden">
             <!-- Header -->
             <header class="flex justify-between items-center py-4 px-6 bg-white shadow-sm">
+                <!-- ... existing header content ... -->
                 <div class="flex items-center">
                     <button class="text-gray-500 focus:outline-none lg:hidden">
                         <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,6 +61,17 @@ import { Link } from '@inertiajs/vue3';
                     </button>
                 </div>
             </header>
+
+            <!-- Flash Messages -->
+            <!-- Flash Messages -->
+            <div v-if="$page.props.flash?.success" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mx-6 mt-4" role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline">{{ $page.props.flash.success }}</span>
+            </div>
+            <div v-if="$page.props.flash?.error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mx-6 mt-4" role="alert">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline">{{ $page.props.flash.error }}</span>
+            </div>
 
             <!-- Page Content -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
